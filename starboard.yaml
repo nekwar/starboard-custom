@@ -757,11 +757,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: starboard
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -776,33 +771,18 @@ kind: Secret
 metadata:
   name: starboard
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: starboard-trivy-config
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: starboard
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 data:
   vulnerabilityReports.scanner: "Trivy"
   configAuditReports.scanner: "Polaris"
@@ -814,11 +794,6 @@ kind: ConfigMap
 metadata:
   name: starboard-trivy-config
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 data:
   trivy.imageRef: "docker.io/aquasec/trivy:0.25.2"
   trivy.mode: "Standalone"
@@ -836,11 +811,6 @@ kind: ConfigMap
 metadata:
   name: starboard-polaris-config
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 data:
   polaris.imageRef: "quay.io/fairwinds/polaris:4.2"
   polaris.resources.requests.cpu: "50m"
@@ -1037,11 +1007,6 @@ kind: ConfigMap
 metadata:
   name: starboard-policies-config
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 data:
   library.kubernetes.rego: "package lib.kubernetes\n\ndefault is_gatekeeper = false\n\nis_gatekeeper
     {\n\thas_field(input, \"review\")\n\thas_field(input.review, \"object\")\n}\n\nobject
@@ -1906,11 +1871,6 @@ kind: Service
 metadata:
   name: starboard
   namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard
-    app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
   annotations:
     prometheus.io/path: /metrics
     prometheus.io/scrape: "true"
@@ -1932,8 +1892,6 @@ metadata:
   labels:
     app.kubernetes.io/name: starboard
     app.kubernetes.io/instance: starboard
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
 spec:
   replicas: 1
   strategy:
@@ -1956,11 +1914,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: OPERATOR_NAMESPACE
-              value: "starboard-system"
+              value: "starboard"
             - name: OPERATOR_TARGET_NAMESPACES
               value: ""
             - name: OPERATOR_EXCLUDE_NAMESPACES
-              value: "kube-system,starboard-system"
+              value: "kube-system,starboard"
             - name: OPERATOR_SERVICE_ACCOUNT
               value: "starboard"
             - name: OPERATOR_LOG_DEV_MODE

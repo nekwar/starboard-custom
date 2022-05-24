@@ -588,29 +588,29 @@ kind: Namespace
 metadata:
   name: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: starboard-operator
+  name: starboard
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: starboard-operator
+  name: starboard
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 rules:
@@ -756,19 +756,19 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: starboard-operator
+  name: starboard
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: starboard-operator
+  name: starboard
 subjects:
   - kind: ServiceAccount
-    name: starboard-operator
+    name: starboard
     namespace: starboard-system
 ---
 apiVersion: v1
@@ -777,8 +777,8 @@ metadata:
   name: starboard
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 ---
@@ -788,8 +788,8 @@ metadata:
   name: starboard-trivy-config
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 ---
@@ -799,8 +799,8 @@ metadata:
   name: starboard
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 data:
@@ -815,8 +815,8 @@ metadata:
   name: starboard-trivy-config
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 data:
@@ -837,8 +837,8 @@ metadata:
   name: starboard-polaris-config
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 data:
@@ -1038,8 +1038,8 @@ metadata:
   name: starboard-policies-config
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 data:
@@ -1904,11 +1904,11 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: starboard-operator
+  name: starboard
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
   annotations:
@@ -1921,17 +1921,17 @@ spec:
       targetPort: metrics
       name: metrics
   selector:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: starboard-operator
+  name: starboard
   namespace: starboard-system
   labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
+    app.kubernetes.io/name: starboard
+    app.kubernetes.io/instance: starboard
     app.kubernetes.io/version: "0.15.4"
     app.kubernetes.io/managed-by: kubectl
 spec:
@@ -1940,19 +1940,19 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app.kubernetes.io/name: starboard-operator
-      app.kubernetes.io/instance: starboard-operator
+      app.kubernetes.io/name: starboard
+      app.kubernetes.io/instance: starboard
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: starboard-operator
-        app.kubernetes.io/instance: starboard-operator
+        app.kubernetes.io/name: starboard
+        app.kubernetes.io/instance: starboard
     spec:
-      serviceAccountName: starboard-operator
+      serviceAccountName: starboard
       automountServiceAccountToken: true
       containers:
-        - name: "starboard-operator"
-          image: "nekwar/starboard-operator:dev"
+        - name: "starboard"
+          image: "nekwar/starboard:dev"
           imagePullPolicy: Always
           env:
             - name: OPERATOR_NAMESPACE
@@ -1962,7 +1962,7 @@ spec:
             - name: OPERATOR_EXCLUDE_NAMESPACES
               value: "kube-system,starboard-system"
             - name: OPERATOR_SERVICE_ACCOUNT
-              value: "starboard-operator"
+              value: "starboard"
             - name: OPERATOR_LOG_DEV_MODE
               value: "false"
             - name: OPERATOR_SCAN_JOB_TIMEOUT
@@ -2027,16 +2027,3 @@ spec:
             readOnlyRootFilesystem: true
       securityContext:
         {}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: starboard-trivy-google-creds
-  namespace: starboard-system
-  labels:
-    app.kubernetes.io/name: starboard-operator
-    app.kubernetes.io/instance: starboard-operator
-    app.kubernetes.io/version: "0.15.4"
-    app.kubernetes.io/managed-by: kubectl
-data:
-  google-creds.json: base64encodedcreds 
